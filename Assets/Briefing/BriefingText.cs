@@ -89,7 +89,6 @@ public class BriefingText : MonoBehaviour
 			if (_fxFlag < Ghost.text.Length)
 			{
 				_sb.Append(Ghost.text[_fxFlag]);
-
 				Container.text = _sb.ToString();
 
 				_tg = Ghost.cachedTextGenerator;
