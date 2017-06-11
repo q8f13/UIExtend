@@ -42,6 +42,19 @@ public class BriefingText : MonoBehaviour
 	}
 
 	/// <summary>
+	/// 重填文字内容
+	/// </summary>
+	/// <param name="txt"></param>
+	public void Refill(string txt)
+	{
+		Container.text = txt;
+		Ghost.text = txt;
+
+		_textAll = txt;
+		Reset(AutoPlay);
+	}
+
+	/// <summary>
 	/// 重制，如果开了自动播放(Autoplay)则自动开始第一段，否则显示按钮
 	/// </summary>
 	/// <param name="autoPlay"></param>
@@ -49,6 +62,11 @@ public class BriefingText : MonoBehaviour
 	{
 		Container.text = null;
 		BtnNext.gameObject.SetActive(!autoPlay);
+
+		_flag = 0;
+		_isPaused = true;
+		_fxFlag = 0;
+
 		if(autoPlay)
 			NextPa();
 	}
