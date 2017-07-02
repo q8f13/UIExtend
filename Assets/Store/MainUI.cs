@@ -38,9 +38,6 @@ public class MainUI : MonoBehaviour
 	{
 		Init();
 
-		// open list ui
-		_pdUI.Show();
-		UpdateBackBtn();
 	}
 
 	private void Init()
@@ -56,6 +53,12 @@ public class MainUI : MonoBehaviour
 
 		_back.onClick.AddListener(OnBackPressed);
 
+		// open list ui
+		_dtUI.Hide();
+		_vUI.Hide();
+		_pdUI.Show();
+		UpdateBackBtn();
+
 		_inited = true;
 	}
 
@@ -70,6 +73,18 @@ public class MainUI : MonoBehaviour
 		_dtUI.ShowDetail(data);
 
 		UpdateBackBtn();
+	}
+
+	public void AddItemToWishlist(ItemData data)
+	{
+		_ds.AddToWishlist(data);
+	}
+
+	public void ShowDemonstration(ItemData data)
+	{
+		_backStack.Peek().Hide();
+		_vUI.Show();
+		_vUI.Refresh(_ds.GetWishList);
 	}
 
 	private void OnBackPressed()

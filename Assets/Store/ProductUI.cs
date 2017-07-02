@@ -22,6 +22,8 @@ public class ProductUI : BackStackBase
 	// Use this for initialization
 	void Start ()
 	{
+		#region DebugData
+/*
 		int count = Random.Range(4,12);
 		while(count > 0)
 		{
@@ -30,6 +32,17 @@ public class ProductUI : BackStackBase
 			item.SetData(MainUI.Instance.DataSet.GetData("ttt"));
 			item.OnSelectAction = MainUI.Instance.OpenItemForDetail;
 			count--;
+		}
+*/
+		#endregion
+
+		ItemData[] datas = MainUI.Instance.DataSet.DataStorage;
+		for (int i = 0; i < datas.Length; i++)
+		{
+			GameObject itemGo = Instantiate(_pdItemPrefab.gameObject, _slot, false);
+			ProductItem item = itemGo.GetComponent<ProductItem>();
+			item.SetData(datas[i]);
+			item.OnSelectAction = MainUI.Instance.OpenItemForDetail;
 		}
 
 		qfUtility.AutoAdjustForScrollView(_listContentRt, _slot.GetComponent<VerticalLayoutGroup>().spacing);
