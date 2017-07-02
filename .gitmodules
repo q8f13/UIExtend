@@ -1,0 +1,3 @@
+[submodule "Assets/toolbox"]
+	path = Assets/toolbox
+	url = https://github.com/q8f13/toolbox.git
