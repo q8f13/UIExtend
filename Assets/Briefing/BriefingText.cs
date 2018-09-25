@@ -27,6 +27,8 @@ public class BriefingText : MonoBehaviour
 	private int _flag = 0;		// 所有文字中的index
 	private int _fxFlag = 0;	// 当前段文字中的index
 
+	public bool AllDone { get {return _textAll == null || _flag > _textAll.Length - 1; } }
+
 	// Use this for initialization
 	void Start () {
 		RectTransform rt = GetComponent<RectTransform>();
@@ -37,6 +39,7 @@ public class BriefingText : MonoBehaviour
 		_lineCount = Mathf.FloorToInt((rt.sizeDelta.y - ascentPerLine)/(ascentPerLine + Container.fontSize/2.0f));
 
 		BtnNext.onClick.AddListener(() => { NextPa(); });
+
 		// 重置界面
 		Reset(AutoPlay);
 	}
@@ -73,26 +76,32 @@ public class BriefingText : MonoBehaviour
 
 	void NextPa()
 	{
+		// 确保执行时播放标记正确
 		if (!_isPaused)
 		{
 			Debug.LogWarning("text fx is still playing");
 			return;
 		}
 
+		// 清空stringbuilder
 		_sb.Remove(0, _sb.Length);
 
+		// 如果_flag下标已经达到所有文字的最后一个字的下标，那么判定为所有字已经显示完。忽略这次动作
 		if (_flag >= _textAll.Length - 1)
 		{
 			Debug.LogWarning("reach the end");
 			return;
 		}
 		
+		// 还有要显示的下一段字
 		// 先让ghost文本框先尝试装一下下段文本量，用来计算
 		Ghost.text = _textAll.Substring(_flag,Mathf.Min(150, _textAll.Length - _flag));
 		_tg = Ghost.cachedTextGenerator;
 
-		// 开始打字机效果
+		// 将isPaused标记置false，开始打字机效果。让update里的更新逻辑可以执行
 		_isPaused = false;
+
+		// 隐藏next按钮
 		BtnNext.gameObject.SetActive(false);
 	}
 	
@@ -124,6 +133,11 @@ public class BriefingText : MonoBehaviour
 				if (_flag < _textAll.Length - 1)
 					BtnNext.gameObject.SetActive(true);
 			}
+		}
+
+		if (Input.GetKeyUp(KeyCode.Space))
+		{
+			Debug.Log("alldone? " + AllDone);
 		}
 	}
 
