@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class DataSet : ScriptableObject
@@ -9,9 +7,16 @@ public class DataSet : ScriptableObject
 	private Dictionary<string, ItemData> _dataSetStore;
 
 	public ItemData[] DataStorage;
+	public bool IsInited { get { return _dataSetStore != null; } }
+	public int Count { get { return _dataSetStore.Count; } }
+
+	private ItemData[] _wishList;
 
 	public void Init()
 	{
+		if (IsInited)
+			return;
+
 		_dataSetStore = new Dictionary<string, ItemData>();
 		if (DataStorage != null && DataStorage.Length > 0)
 		{
@@ -22,6 +27,8 @@ public class DataSet : ScriptableObject
 				_dataSetStore.Add(d.Name, d);
 			}
 		}
+
+		_wishList = new ItemData[_dataSetStore.Count];
 	}
 
 	public ItemData GetData(string name)

@@ -19,9 +19,10 @@ public class ProductUI : BackStackBase
 	[SerializeField]
 	private Transform _slot;
 
-	// Use this for initialization
-	void Start ()
+	void Start()
 	{
+		MainUI.Instance.DataSet.Init();
+
 		int count = Random.Range(4,12);
 		while(count > 0)
 		{

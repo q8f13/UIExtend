@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
@@ -36,9 +37,13 @@ public class MainUI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		_ds.Init();
+
 		Init();
 
 		// open list ui
+		_dtUI.Hide();
+		_vUI.Hide();
 		_pdUI.Show();
 		UpdateBackBtn();
 	}
@@ -51,8 +56,6 @@ public class MainUI : MonoBehaviour
 		_dtUI.Initialize(_backStack);
 		_pdUI.Initialize(_backStack);
 		_vUI.Initialize(_backStack);
-
-		_ds.Init();
 
 		_back.onClick.AddListener(OnBackPressed);
 
@@ -92,8 +95,16 @@ public class MainUI : MonoBehaviour
 		_back.gameObject.SetActive(_backStack.Count > 1);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	public void OpenARInspector(ItemData _data)
+	{
+		_backStack.Peek().Hide();
+		_vUI.Show();
+
+		UpdateBackBtn();
+	}
+
+	internal void AddToWishlist(ItemData _data)
+	{
+		throw new NotImplementedException();
 	}
 }
